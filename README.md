@@ -4,21 +4,21 @@
 2. Adjunto el mismo ejercicio con una imagen para poder integrar en capas. Bussines, Client y data.
 3. Bajar a net core 3.1 y angular 10 en lo posible.
 
-## Backend realizado en [Visual Studio Community 2022](https://visualstudio.microsoft.com/es/vs/)
+## Backend realizado en [Visual Studio Community 2022](https://visualstudio.microsoft.com/es/vs/) (net 3.1)
 
 > Paquetes NuGet
 
 ```sh
 - instalados de forma manual: - (Tools > NuGet Package Manager > Manage NuGet Packages for Solution)
-entityframeworkcore 5.0.17
-entityframeworkcore.sqlserver 5.0.17
-entityframeworkcore.tools 5.0.17
+entityframeworkcore 3.1.25
+entityframeworkcore.sqlserver 3.1.24
+entityframeworkcore.tools 3.1.24
 swashbuckle.aspnetcore 6.3.1
 ```
 
 Persistencia en SQL server
 
-## Frontend realizado en Angular en [Visual Studio Code](https://code.visualstudio.com/)
+## Frontend realizado en Angular 10 en [Visual Studio Code](https://code.visualstudio.com/)
 
 > Paquetes npm
 
@@ -32,8 +32,8 @@ ngx-toastr ^14.2.2 - Para crear el popup al momento de crear/eliminar TODO
 
 ## Guia de usuario
 
-- Abrir el proyecto BackendTodo con Visual Studio Community
-- Editar el campo "DevConnection" del archivo "appsettings.json" de la carpeta raiz con la cadena de conexión a la base de datos
+- Abrir el proyecto Backend con Visual Studio Community
+- Editar el campo "DefaultConnection" del archivo "appsettings.json" de la carpeta raiz con la cadena de conexión a la base de datos
 - Para crear la base de datos. En el menu superior de visual studio Herramientas > Administracion de paquete NuGet > Consola del Administrador de paquetes. Correr el comando:
 
 ```sh
@@ -41,10 +41,17 @@ Update-database
 ```
 
 - Dejar corriendo el proyecto en el background
+- Guardar el nº de puerto en el que esta corriendo
 
 ##
 
-- Abrir una consola en la carpeta CRUDTodo
+- Editar el valor de la variable "myAppUrl" con el nº de puerto donde corre el backend en el archivo ubicado en "Frontend > src > app > services > todo.service.ts"
+
+```sh
+private myAppUrl = 'https://localhost:5001/';
+```
+
+- Abrir una consola en la carpeta Frontend
 - Correr el siguiente comando para correr el frontend de forma local
 
 ```sh

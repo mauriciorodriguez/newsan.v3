@@ -1,4 +1,5 @@
 using Backend.Contexts;
+using Backend.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -28,9 +29,11 @@ namespace Backend
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));//, ef => ef.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
             services.AddSwaggerGen();
-            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), ef => ef.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
-            //services.AddScoped<ApplicationDbContext>(provider => provider.GetService<ApplicationDbContext>());
+            services.AddCors(options => options.AddPolicy("AllowWebApp", builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()));
+            services.AddScoped<TodoRepository>();
+            services.AddScoped<ApplicationDbContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -42,6 +45,8 @@ namespace Backend
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+
+            app.UseCors("AllowWebApp");
 
             app.UseHttpsRedirection();
 
